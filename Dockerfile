@@ -13,7 +13,9 @@ COPY ./ ./
 
 RUN pnpm run build
 
-FROM node:lts-alpine
+FROM alpine:latest
+
+RUN apk add --no-cache nodejs pnpm
 
 WORKDIR /usr/share/app
 
@@ -24,10 +26,10 @@ COPY --from=builder /usr/share/app/dist ./dist
 COPY --from=builder /usr/share/app/package*.json ./
 COPY --from=builder /usr/share/app/pnpm-lock.yaml ./
 
-RUN corepack enable
 RUN pnpm i --prod
 RUN pnpm store prune
-RUN pnpm corepack disable
+
+RUN apk remove pnpm
 
 USER node
 EXPOSE 3000
