@@ -10,6 +10,7 @@ export class EmailVO {
 
   public validate(value: string): void {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
     if (!regex.test(value)) {
       throw new ValueObjectException(EmailVO.name);
     }
