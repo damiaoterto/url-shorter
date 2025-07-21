@@ -29,9 +29,11 @@ COPY --from=builder /usr/share/app/pnpm-lock.yaml ./
 RUN pnpm i --prod
 RUN pnpm store prune
 
-RUN apk remove pnpm
+RUN apk del pnpm
 
-USER node
+RUN addgroup --system appgroup && adduser --system --ingroup appgroup urlshorter
+USER urlshorter
+
 EXPOSE 3000
 
 CMD ["node", "./dist/main"]
