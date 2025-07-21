@@ -1,7 +1,8 @@
+import { randomUUID } from 'node:crypto';
 import { User } from './user.entity';
 import { ValueObjectException } from '@shared/exceptions/value-object.exception';
 
-describe('User Entity - Integration Test', () => {
+describe('User Entity', () => {
   afterEach(() => {
     jest.useRealTimers();
   });
@@ -38,6 +39,16 @@ describe('User Entity - Integration Test', () => {
       });
 
       expect(user.createdAt).toEqual(specificDate);
+    });
+
+    it('should use the provided id when available', () => {
+      const id = randomUUID().toString();
+      const user = User.create({
+        ...validUserData,
+        id,
+      });
+
+      expect(user.id).toEqual(id);
     });
   });
 
