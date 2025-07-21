@@ -6,6 +6,7 @@ export class CryptModule {
     return {
       module: CryptModule,
       providers: [{ provide: HashAlg, useClass: alg }],
+      exports: [HashAlg],
     };
   }
 }
