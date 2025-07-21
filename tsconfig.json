@@ -6,6 +6,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    "allowJs": true,
     "resolveJsonModule": true,
     "target": "ES2023",
     "sourceMap": true,
@@ -21,9 +22,12 @@
     "paths": {
       "@application/*": ["./src/application/*"],
       "@domain/*": ["./src/domain/*"],
+      "@generated/*": ["./generated/*"],
+      "@generated": ["./generated"],
       "@infrastructure/*": ["./src/infrastructure/*"],
       "@presentation/*": ["./src/presentation/*"],
-      "@shared/*": ["./src/shared/*"]
+      "@shared/*": ["./src/shared/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   }
 }
