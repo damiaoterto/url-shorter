@@ -14,6 +14,8 @@ export class AccessUrlUseCase implements UseCase<string, Url> {
       throw new NotFoundException('Url register not found');
     }
 
+    existsUrl.incrementClick();
+    await this.urlRepository.update(existsUrl.id!, existsUrl);
     return existsUrl;
   }
 }
