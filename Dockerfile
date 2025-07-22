@@ -11,6 +11,7 @@ RUN pnpm i
 
 COPY ./ ./
 
+RUN pnpm prisma generate
 RUN pnpm run build
 
 FROM alpine:latest
@@ -23,6 +24,7 @@ ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
 COPY --from=builder /usr/share/app/dist ./dist
+COPY --from=builder /usr/share/app/generated ./generated
 COPY --from=builder /usr/share/app/package*.json ./
 COPY --from=builder /usr/share/app/pnpm-lock.yaml ./
 
