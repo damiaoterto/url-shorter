@@ -25,6 +25,7 @@
       "@generated/*": ["./generated/*"],
       "@generated": ["./generated"],
       "@infrastructure/*": ["./src/infrastructure/*"],
+      "@modules/*": ["./src/modules/*"],
       "@presentation/*": ["./src/presentation/*"],
       "@shared/*": ["./src/shared/*"],
       "@utils/*": ["./src/utils/*"]
