@@ -55,6 +55,7 @@ export class PrismaUrlRepository implements UrlRepository {
       data: {
         id: entity.id!,
         originalUrl: entity.originalUrl,
+        shortUrl: entity.shortUrl!,
         clicks: entity.clicks,
         shortCode: entity.shortCode!,
         createdAt: entity.createdAt!,
