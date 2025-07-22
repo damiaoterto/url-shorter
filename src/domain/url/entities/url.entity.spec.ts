@@ -45,6 +45,7 @@ describe('Url Entity', () => {
         id: 'provided-id-123',
         originalUrl: 'https://google.com',
         shortCode: 'g-short',
+        shortUrl: 'http://localhost:3000/abcrd3S',
         clicks: 100,
         createdAt: new Date('2022-01-01'),
         updatedAt: new Date('2022-02-01'),
@@ -55,6 +56,7 @@ describe('Url Entity', () => {
 
       expect(url.id).toBe(providedData.id);
       expect(url.shortCode).toBe(providedData.shortCode);
+      expect(url.shortUrl).toBe(providedData.shortUrl);
       expect(url.clicks).toBe(providedData.clicks);
       expect(url.createdAt).toEqual(providedData.createdAt);
       expect(url.updatedAt).toEqual(providedData.updatedAt);

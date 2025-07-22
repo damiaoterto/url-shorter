@@ -21,6 +21,7 @@ model User {
 model Url {
   id          String    @id @default(uuid())
   originalUrl String    @db.VarChar(200)
+  shortUrl    String    @db.VarChar(200)
   shortCode   String    @unique @db.VarChar(120)
   clicks      BigInt    @db.BigInt()
   createdAt   DateTime  @default(now())

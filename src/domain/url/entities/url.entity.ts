@@ -1,11 +1,19 @@
 import { randomBytes, randomUUID } from 'node:crypto';
 import { BaseEntity } from '@shared/entities/base.entity';
 import { PropertiesOnly } from '@shared/types/properties-only.type';
+import { Exclude } from 'class-transformer';
 
 export class Url extends BaseEntity {
   originalUrl: string;
+
   shortCode?: string;
+
+  shortUrl?: string;
+
+  @Exclude()
   clicks: number;
+
+  @Exclude()
   deletedAt?: Date | null;
 
   incrementClick(): void {
@@ -24,6 +32,7 @@ export class Url extends BaseEntity {
     url.id = data.id ?? randomUUID().toString();
     url.originalUrl = data.originalUrl;
     url.shortCode = data.shortCode ?? url.generateShortCode();
+    url.shortUrl = data.shortUrl;
     url.clicks = data.clicks ?? 0;
     url.createdAt = data.createdAt ?? new Date();
     url.updatedAt = data.updatedAt ?? null;
