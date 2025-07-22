@@ -12,6 +12,7 @@ describe('FindUserByEmailUseCase', () => {
     userRepository = {
       findByEmail: jest.fn(),
       createNew: jest.fn(),
+      addURL: jest.fn(),
     };
 
     useCase = new FindUserByEmailUseCase(userRepository);

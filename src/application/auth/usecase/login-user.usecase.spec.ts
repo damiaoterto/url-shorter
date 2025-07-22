@@ -18,6 +18,7 @@ describe('LoginUserUseCase', () => {
     userRepository = {
       findByEmail: jest.fn(),
       createNew: jest.fn(),
+      addURL: jest.fn(),
     };
     hashAlg = {
       hash: jest.fn(),
