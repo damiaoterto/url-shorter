@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UrlRepository } from './url.repository';
+import { UrlRepository, UrlUpdateData } from './url.repository';
 import { Url } from '../entities/url.entity';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class InMemoryRepository implements UrlRepository {
     return this.urls.find((url) => url.id === id);
   }
 
-  async update(id: string, data: Partial<Url>): Promise<void> {
+  async update(id: string, data: UrlUpdateData): Promise<void> {
     const existsUrl = await this.findById(id);
 
     if (!existsUrl) {
