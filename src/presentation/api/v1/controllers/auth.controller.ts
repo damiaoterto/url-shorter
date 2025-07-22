@@ -8,14 +8,19 @@ import {
 } from '@nestjs/common';
 import { RegisterUserDTO } from '@application/auth/dto/register-user.dto';
 import { RegisterUseCase } from '@application/auth/usecase/register-user.usecase';
+import { LoginUserUseCase } from '@application/auth/usecase/login-user.usecase';
+import { LoginUserDTO } from '@application/auth/dto/login-user.dto';
 
 @Controller({ path: 'auth', version: '1' })
 export class AuthController {
-  constructor(private readonly registerUserUseCase: RegisterUseCase) {}
+  constructor(
+    private readonly registerUserUseCase: RegisterUseCase,
+    private readonly loginUserUseCase: LoginUserUseCase,
+  ) {}
 
   @Post('login')
-  async login() {
-    // TODO
+  async login(@Body() data: LoginUserDTO) {
+    return await this.loginUserUseCase.execute(data);
   }
 
   @Post('register')

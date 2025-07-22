@@ -4,12 +4,14 @@ import {
   ConfigModule as NestConfigModule,
 } from '@nestjs/config';
 import { ConfigService } from './services/config.service';
+import jwtConfig from './configs/jwt.config';
 
 export class ConfigModule {
   static forRoot(): DynamicModule {
     return {
       module: ConfigModule,
-      imports: [NestConfigModule.forRoot()],
+      global: true,
+      imports: [NestConfigModule.forRoot({ load: [jwtConfig] })],
       providers: [NestConfigService, ConfigService],
     };
   }

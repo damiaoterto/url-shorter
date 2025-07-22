@@ -5,11 +5,18 @@ import { InMemoryUserRepository } from '@domain/user/repository/in-memory.reposi
 import { UserRepository } from '@domain/user/repository/user.repository';
 import { CryptModule } from '@infrastructure/crypt/crypt.module';
 import { Argon2Alg } from '@infrastructure/crypt/algs/argon2.alg';
+import { LoginUserUseCase } from '@application/auth/usecase/login-user.usecase';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConfigFactory } from '@infrastructure/config/factories/jwt-config.factory';
 
 @Module({
-  imports: [CryptModule.forFeature(Argon2Alg)],
+  imports: [
+    CryptModule.forFeature(Argon2Alg),
+    JwtModule.registerAsync(jwtConfigFactory()),
+  ],
   providers: [
     { provide: UserRepository, useClass: InMemoryUserRepository },
+    LoginUserUseCase,
     RegisterUseCase,
   ],
   controllers: [AuthController],
