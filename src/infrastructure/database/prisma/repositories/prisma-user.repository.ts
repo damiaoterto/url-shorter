@@ -11,7 +11,11 @@ export class PrismaUserRepository implements UserRepository {
   async findByEmail(email: string): Promise<User | undefined> {
     const existsUser = await this.prismaClient.user.findUnique({
       where: { email },
-      include: { urls: true },
+      include: {
+        urls: {
+          where: { deletedAt: null },
+        },
+      },
     });
 
     if (!existsUser) return undefined;

@@ -62,7 +62,11 @@ describe('PrismaUserRepository', () => {
 
       expect(prismaClientMock.user.findUnique).toHaveBeenCalledWith({
         where: { email },
-        include: { urls: true },
+        include: {
+          urls: {
+            where: { deletedAt: null },
+          },
+        },
       });
       expect(result).toBeInstanceOf(User);
       expect(result?.urls).toHaveLength(1);
@@ -78,7 +82,11 @@ describe('PrismaUserRepository', () => {
 
       expect(prismaClientMock.user.findUnique).toHaveBeenCalledWith({
         where: { email },
-        include: { urls: true },
+        include: {
+          urls: {
+            where: { deletedAt: null },
+          },
+        },
       });
       expect(result).toBeUndefined();
     });
