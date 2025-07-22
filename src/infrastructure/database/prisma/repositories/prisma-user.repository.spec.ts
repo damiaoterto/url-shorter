@@ -39,7 +39,7 @@ describe('PrismaUserRepository', () => {
         email: email,
         password: 'hashed_password',
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: undefined,
       };
       prismaClientMock.user.findUnique.mockResolvedValue(dbUser);
 
