@@ -4,6 +4,7 @@ import { OpenApiModule } from '@infrastructure/openapi/openapi.module';
 import { ConfigModule } from '@infrastructure/config/config.module';
 import { PrismaModule } from '@infrastructure/database/prisma/prisma.module';
 import { UrlModule } from '@infrastructure/iac/url.module';
+import { AppController } from '@presentation/api/v1/controllers/app.controller';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { UrlModule } from '@infrastructure/iac/url.module';
     AuthModule,
     UrlModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}
