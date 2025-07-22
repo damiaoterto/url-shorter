@@ -35,11 +35,20 @@ describe('GetUser Decorator', () => {
     expect(result).toBe(mockUser.email);
   });
 
-  it('should throw an error if the user object is not found on the request', () => {
+  it('should return undefined if the user object is not found on the request', () => {
     const contextWithoutUser = createMockExecutionContext(undefined);
 
-    expect(() =>
-      getUserDecoratorFactory(undefined, contextWithoutUser),
-    ).toThrow(new Error('User data not found on request'));
+    const result = getUserDecoratorFactory(undefined, contextWithoutUser);
+
+    expect(result).toBeUndefined();
+  });
+
+  it('should return undefined if the requested data key does not exist on the user object', () => {
+    const context = createMockExecutionContext(mockUser);
+    const nonExistentProperty = 'age';
+
+    const result = getUserDecoratorFactory(nonExistentProperty, context);
+
+    expect(result).toBeUndefined();
   });
 });

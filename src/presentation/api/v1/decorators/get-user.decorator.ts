@@ -8,7 +8,7 @@ export const getUserDecoratorFactory = (
   const request = ctx.switchToHttp().getRequest<Request>();
   const user = request['user'];
 
-  if (!user) throw new Error('User data not found on request');
+  if (!user) return undefined;
   if (!data) return user;
 
   return user[data];
