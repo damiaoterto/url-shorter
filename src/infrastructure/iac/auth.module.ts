@@ -6,13 +6,18 @@ import { Argon2Alg } from '@infrastructure/crypt/algs/argon2.alg';
 import { LoginUserUseCase } from '@application/auth/usecase/login-user.usecase';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConfigFactory } from '@infrastructure/config/factories/jwt-config.factory';
+import { AuthGuard } from '@presentation/api/v1/guards/auth.guard';
+import { ConfigModule } from '@infrastructure/config/config.module';
+import { UserModule } from './user.module';
 
 @Module({
   imports: [
+    UserModule,
+    ConfigModule.forFeature(),
     CryptModule.forFeature(Argon2Alg),
     JwtModule.registerAsync(jwtConfigFactory()),
   ],
-  providers: [LoginUserUseCase, RegisterUseCase],
+  providers: [LoginUserUseCase, RegisterUseCase, AuthGuard],
   controllers: [AuthController],
 })
 export class AuthModule {}

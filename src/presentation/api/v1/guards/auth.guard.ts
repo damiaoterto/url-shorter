@@ -12,7 +12,7 @@ import { ConfigService } from '@infrastructure/config/services/config.service';
 export class AuthGuard implements CanActivate {
   constructor(
     private readonly configService: ConfigService,
-    private jwtService: JwtService,
+    private readonly jwtService: JwtService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
     }
     try {
       const payload = await this.jwtService.verifyAsync(token, {
-        secret: this.configService.get('jwt.secret'),
+        secret: this.configService.get<string>('jwt.secret'),
       });
 
       request['user'] = payload;
