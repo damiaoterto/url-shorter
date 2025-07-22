@@ -14,7 +14,7 @@ export class PrismaUserRepository implements UserRepository {
 
     if (!existsUser) return undefined;
 
-    return existsUser;
+    return User.create(existsUser);
   }
 
   async createNew(entity: User): Promise<void> {
