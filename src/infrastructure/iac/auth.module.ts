@@ -9,6 +9,7 @@ import { jwtConfigFactory } from '@infrastructure/config/factories/jwt-config.fa
 import { AuthGuard } from '@presentation/api/v1/guards/auth.guard';
 import { ConfigModule } from '@infrastructure/config/config.module';
 import { UserModule } from './user.module';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -17,7 +18,12 @@ import { UserModule } from './user.module';
     CryptModule.forFeature(Argon2Alg),
     JwtModule.registerAsync(jwtConfigFactory()),
   ],
-  providers: [LoginUserUseCase, RegisterUseCase, AuthGuard],
+  providers: [
+    LoginUserUseCase,
+    RegisterUseCase,
+    AuthGuard,
+    { provide: APP_GUARD, useClass: AuthGuard },
+  ],
   controllers: [AuthController],
 })
 export class AuthModule {}

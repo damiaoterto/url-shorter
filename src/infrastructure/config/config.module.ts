@@ -5,22 +5,23 @@ import {
 } from '@nestjs/config';
 import { ConfigService } from './services/config.service';
 import jwtConfig from './configs/jwt.config';
+import shorterConfig from './configs/shorter.config';
 
 export class ConfigModule {
   static forRoot(): DynamicModule {
     return {
       module: ConfigModule,
-      global: true,
-      imports: [NestConfigModule.forRoot({ load: [jwtConfig] })],
+      imports: [NestConfigModule.forRoot({ load: [jwtConfig, shorterConfig] })],
       providers: [NestConfigService, ConfigService],
     };
   }
 
   static forFeature(): DynamicModule {
     return {
+      global: true,
       module: ConfigModule,
       imports: [NestConfigModule],
-      providers: [ConfigService],
+      providers: [NestConfigService, ConfigService],
       exports: [ConfigService],
     };
   }

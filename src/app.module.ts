@@ -3,6 +3,7 @@ import { AuthModule } from '@infrastructure/iac/auth.module';
 import { OpenApiModule } from '@infrastructure/openapi/openapi.module';
 import { ConfigModule } from '@infrastructure/config/config.module';
 import { PrismaModule } from '@infrastructure/database/prisma/prisma.module';
+import { UrlModule } from '@infrastructure/iac/url.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { PrismaModule } from '@infrastructure/database/prisma/prisma.module';
     PrismaModule.forRoot(),
     OpenApiModule,
     AuthModule,
+    UrlModule,
   ],
   controllers: [],
   providers: [],
