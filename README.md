@@ -1,98 +1,87 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# URL Shorter API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Visão Geral
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Este projeto é um encurtador de URLs desenvolvido com **NestJS**, seguindo princípios de **Clean Architecture** e **Domain-Driven Design (DDD)**. A API permite que os usuários encurtem URLs longas, gerenciem seus links e acessem os links originais através de um código curto. A aplicação é totalmente containerizada com Docker para facilitar a configuração e o deploy do ambiente.
 
-## Description
+## Tecnologias e Metodologias
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A construção deste projeto se baseia em tecnologias modernas e práticas de desenvolvimento que garantem escalabilidade, manutenibilidade e robustez.
 
-## Project setup
+### Tecnologias
 
-```bash
-$ pnpm install
+-   **Backend:** [NestJS](https://nestjs.com/), [TypeScript](https://www.typescriptlang.org/), [Node.js](https://nodejs.org/)
+
+-   **Banco de Dados:** [PostgreSQL](https://www.postgresql.org/) com [Prisma](https://www.prisma.io/) como ORM
+
+-   **Autenticação:** Autenticação baseada em [JSON Web Tokens (JWT)](https://jwt.io/)
+
+-   **Segurança:** Hash de senhas utilizando [Argon2](https://argon2.online/)
+
+-   **Containerização:** [Docker](https://www.docker.com/) e Docker Compose
+
+-   **API:** REST com documentação automatizada via [OpenAPI (Swagger)](https://swagger.io/)
+### Arquitetura e Metodologias
+
+-   **Clean Architecture:** O projeto é estruturado em camadas (`domain`, `application`, `infrastructure`), garantindo a separação de responsabilidades e um baixo acoplamento entre os componentes. A camada de domínio é o núcleo do sistema e não depende de detalhes de implementação externos.
+
+-   **Domain-Driven Design (DDD):** Conceitos de DDD como Entidades (`User`, `Url`), Repositórios (`UserRepository`, `UrlRepository`) e Value Objects (`EmailVO`) são utilizados para modelar o domínio do negócio de forma clara e precisa.
+
+-   **Use Cases:** A lógica de negócio é encapsulada em classes de _Use Cases_ (`CreateNewUrlUseCase`, `LoginUserUseCase`, etc.), cada uma representando uma única ação que um usuário pode realizar. Essa abordagem, alinhada com a Clean Architecture, substitui o uso de "Services" genéricos, pois a complexidade não exigia uma camada adicional de serviços, resultando em classes mais coesas e com uma única responsabilidade (Single Responsibility Principle).
+
+-   **Injeção de Dependência:** O NestJS gerencia o ciclo de vida dos objetos e suas dependências, facilitando a troca de implementações (como usar um repositório em memória para testes e um repositório Prisma para produção).
+
+## Como Executar o Ambiente
+
+Para configurar e executar o ambiente de desenvolvimento, você precisará ter o **Docker** e o **Docker Compose** instalados.
+
+### 1. Clonar o Repositório
+```Bash
+git clone https://github.com/damiaoterto/url-shorter.git
+cd url-shorter
 ```
 
-## Compile and run the project
+### 2. Criar o Arquivo de Variáveis de Ambiente
 
-```bash
-# development
-$ pnpm run start
+O projeto utiliza um arquivo `.env` para configurar as variáveis de ambiente. Você deve criar uma cópia do arquivo de exemplo `.env.example`.
 
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+```Bash
+cp .env.example .env
 ```
 
-## Run tests
+**Observação:** O arquivo `.env.example` já contém valores padrão para um ambiente de desenvolvimento local, mas você pode ajustá-los se necessário.
 
-```bash
-# unit tests
-$ pnpm run test
+### 3. Subir os Serviços com Docker Compose
 
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+Com o Docker em execução, utilize o comando abaixo para construir as imagens e iniciar os contêineres em modo "detached" (-d):
+```Bash
+docker compose --env-file .env up -d --build
 ```
 
-## Deployment
+Este comando irá:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+-   Construir a imagem da aplicação NestJS.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+-   Iniciar um contêiner para o banco de dados PostgreSQL.
 
-```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+-   Executar as migrações do Prisma para criar as tabelas no banco de dados.
+
+-   Iniciar a aplicação, que estará disponível na porta `3000`.
+
+
+Para verificar se os serviços estão em execução, você pode usar o comando:
+```Bash
+docker compose ps
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Endpoints e Documentação
 
-## Resources
+Após iniciar os serviços, a aplicação estará acessível em `http://localhost:3000`.
 
-Check out a few resources that may come in handy when working with NestJS:
+### Documentação da API (Swagger)
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+A API possui uma documentação completa e interativa gerada com OpenAPI (Swagger). Para acessá-la, navegue até:
 
-## Support
+**[http://localhost:3000/swagger](https://www.google.com/search?q=http://localhost:3000/swagger)**
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Lá você encontrará todos os endpoints disponíveis, seus parâmetros, schemas de DTOs e poderá testá-los diretamente pela interface.
